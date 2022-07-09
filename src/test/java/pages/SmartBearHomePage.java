@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class SmartBearHomePage {
+
     public SmartBearHomePage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }

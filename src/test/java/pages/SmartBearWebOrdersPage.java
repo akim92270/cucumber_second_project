@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class SmartBearWebOrdersPage {
+
     public SmartBearWebOrdersPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -17,4 +18,10 @@ public class SmartBearWebOrdersPage {
 
     @FindBy(css = ".CheckUncheck a")
     public List<WebElement> checkUncheckLinks;
+
+    @FindBy(id = "ctl00_MainContent_btnDelete")
+    public WebElement deleteSelectedButton;
+
+    @FindBy(id = "ctl00_MainContent_btnDelete")
+    public WebElement orderMessageText;
 }
