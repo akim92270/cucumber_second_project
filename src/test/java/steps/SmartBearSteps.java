@@ -7,6 +7,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
 import org.junit.Assert;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -16,6 +17,7 @@ import pages.SmartBearWebOrdersPage;
 import utilities.Driver;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class SmartBearSteps {
 
@@ -64,7 +66,7 @@ public class SmartBearSteps {
 
     @Then("user should be routed to {string}")
     public void userShouldBeRoutedTo(String link) {
-        Assert.assertEquals(link,driver.getCurrentUrl());
+        Assert.assertEquals(link, driver.getCurrentUrl());
     }
 
     @And("validate below menu items are displayed")
@@ -76,7 +78,7 @@ public class SmartBearSteps {
 
     @When("user clicks on {string} button")
     public void userClicksOnButton(String checkOrUncheck) {
-        switch(checkOrUncheck) {
+        switch (checkOrUncheck) {
             case "Check All":
                 smartBearWebOrdersPage.checkUncheckLinks.get(0).click();
                 break;
@@ -100,7 +102,8 @@ public class SmartBearSteps {
     }
 
     @When("user clicks on {string} menu item")
-    public void userClicksOnMenuItem(String arg0) {
+    public void userClicksOnMenuItem(String order) {
+        smartBearWebOrdersPage.orderMenuLinks.get(2).click();
     }
 
     @And("user selects {string} as product")
@@ -129,11 +132,21 @@ public class SmartBearSteps {
 
     @Then("validate all orders are deleted from the {string}")
     public void validateAllOrdersAreDeletedFromThe(String validateOrders) {
-
+        switch (validateOrders) {
+            case "List of All Orders":
+                try {
+                    Assert.assertFalse(smartBearWebOrdersPage.table.isDisplayed());
+                } catch (NoSuchElementException e) {
+                    Assert.assertTrue(true);
+                }
+                break;
+            default:
+                throw new NotFoundException("The table is not defined properly in the feature file.");
+        }
     }
 
     @And("validate user sees {string} Message")
     public void validateUserSeesMessage(String message) {
-        Assert.assertEquals(message,smartBearWebOrdersPage.orderMessageText.getText());
+        Assert.assertEquals(message, smartBearWebOrdersPage.orderMessageText.getText());
     }
 }

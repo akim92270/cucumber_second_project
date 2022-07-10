@@ -13,10 +13,10 @@ public class SmartBearWebOrdersPage {
         PageFactory.initElements(driver,this);
     }
 
-    @FindBy(css = "#ctl00_menu li")
+    @FindBy(css = "#ctl00_menu>li")
     public List<WebElement> orderMenuLinks;
 
-    @FindBy(css = ".CheckUncheck a")
+    @FindBy(css = ".CheckUncheck>a")
     public List<WebElement> checkUncheckLinks;
 
     @FindBy(id = "ctl00_MainContent_btnDelete")
@@ -24,4 +24,7 @@ public class SmartBearWebOrdersPage {
 
     @FindBy(id = "ctl00_MainContent_btnDelete")
     public WebElement orderMessageText;
+
+    @FindBy(css = ".SampleTable")
+    public WebElement table;
 }
