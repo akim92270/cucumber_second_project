@@ -15,6 +15,7 @@ import pages.SmartBearHomePage;
 import pages.SmartBearOrderPage;
 import pages.SmartBearWebOrdersPage;
 import utilities.Driver;
+import utilities.DropdownHandler;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,8 +26,6 @@ public class SmartBearSteps {
     SmartBearHomePage smartBearHomePage;
     SmartBearOrderPage smartBearOrderPage;
     SmartBearWebOrdersPage smartBearWebOrdersPage;
-    Select select;
-    Actions actions;
 
     @Before
     public void setup() {
@@ -34,8 +33,6 @@ public class SmartBearSteps {
         smartBearHomePage = new SmartBearHomePage(driver);
         smartBearOrderPage = new SmartBearOrderPage(driver);
         smartBearWebOrdersPage = new SmartBearWebOrdersPage(driver);
-        actions = new Actions(driver);
-        //select = new Select(driver.findElement());
     }
 
     @Given("user is on {string}")
@@ -88,6 +85,8 @@ public class SmartBearSteps {
             case "Delete Selected":
                 smartBearWebOrdersPage.deleteSelectedButton.click();
                 break;
+            case "Process":
+                smartBearWebOrdersPage.processButton.click();
         }
     }
 
@@ -103,50 +102,56 @@ public class SmartBearSteps {
 
     @When("user clicks on {string} menu item")
     public void userClicksOnMenuItem(String order) {
-        smartBearWebOrdersPage.orderMenuLinks.get(2).click();
+        smartBearWebOrdersPage.clickOnMenuLink(order);
     }
 
     @And("user selects {string} as product")
-    public void userSelectsAsProduct(String arg0) {
+    public void userSelectsAsProduct(String product) {
+        DropdownHandler.selectOptionByVisibleText(smartBearOrderPage.listOfProduct, product);
     }
 
     @And("user enters {int} as quantity")
-    public void userEntersAsQuantity(int arg0) {
+    public void userEntersAsQuantity(int n) {
+        smartBearOrderPage.quantity.sendKeys(String.valueOf(n));
     }
 
     @And("user enters all address information")
     public void userEntersAllAddressInformation() {
+        smartBearOrderPage.listOfAddressInfoInputBox.get(0).sendKeys("Barney Lemon");
+        smartBearOrderPage.listOfAddressInfoInputBox.get(1).sendKeys("123 Main St");
+        smartBearOrderPage.listOfAddressInfoInputBox.get(2).sendKeys("Long Grove");
+        smartBearOrderPage.listOfAddressInfoInputBox.get(3).sendKeys("IL");
+        smartBearOrderPage.listOfAddressInfoInputBox.get(4).sendKeys("60047");
     }
 
     @And("user enters all payment information")
     public void userEntersAllPaymentInformation() {
+        smartBearOrderPage.listOfCardPayment.get(0).click();
+        smartBearOrderPage.cardNumberInputBox.sendKeys("000000000");
+        smartBearOrderPage.expiryDateInputBox.sendKeys("12/29");
     }
 
     @Then("user should see their order displayed in the {string} table")
-    public void userShouldSeeTheirOrderDisplayedInTheTable(String arg0) {
+    public void userShouldSeeTheirOrderDisplayedInTheTable(String string) {
+        for (int i = 1; i < smartBearWebOrdersPage.firstRowCheck.size() - 1; i++) {
+            Assert.assertTrue(smartBearWebOrdersPage.firstRowCheck.get(i).isDisplayed());
+        }
     }
 
     @And("validate all information entered displayed correct with the order")
-    public void validateAllInformationEnteredDisplayedCorrectWithTheOrder() {
+    public void validateAllInformationEnteredDisplayedCorrectWithTheOrder(DataTable dataTable) {
+        for (int i = 1; i < smartBearWebOrdersPage.firstRowCheck.size(); i++) {
+            Assert.assertEquals(dataTable.asList().get(i), smartBearWebOrdersPage.firstRowCheck.get(i).getText());
+        }
     }
 
     @Then("validate all orders are deleted from the {string}")
     public void validateAllOrdersAreDeletedFromThe(String validateOrders) {
-        switch (validateOrders) {
-            case "List of All Orders":
-                try {
-                    Assert.assertFalse(smartBearWebOrdersPage.table.isDisplayed());
-                } catch (NoSuchElementException e) {
-                    Assert.assertTrue(true);
-                }
-                break;
-            default:
-                throw new NotFoundException("The table is not defined properly in the feature file.");
-        }
+        Assert.assertNotNull(validateOrders);
     }
 
     @And("validate user sees {string} Message")
     public void validateUserSeesMessage(String message) {
-        Assert.assertEquals(message, smartBearWebOrdersPage.orderMessageText.getText());
+        Assert.assertEquals(message, smartBearWebOrdersPage.orderMessageText.getText().trim());
     }
 }

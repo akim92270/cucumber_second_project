@@ -22,9 +22,24 @@ public class SmartBearWebOrdersPage {
     @FindBy(id = "ctl00_MainContent_btnDelete")
     public WebElement deleteSelectedButton;
 
-    @FindBy(id = "ctl00_MainContent_btnDelete")
+    @FindBy(id = "ctl00_MainContent_orderMessage")
     public WebElement orderMessageText;
 
     @FindBy(css = ".SampleTable")
     public WebElement table;
+
+    @FindBy(css = "table[id='ctl00_MainContent_orderGrid'] tr:nth-child(2)")
+    public List<WebElement> firstRowCheck;
+
+    @FindBy(css = "#ctl00_MainContent_fmwOrder_InsertButton")
+    public WebElement processButton;
+
+    public void clickOnMenuLink(String order){
+        for(WebElement link : orderMenuLinks){
+            if(link.getText().equals(order)){
+                link.click();
+                break;
+            }
+        }
+    }
 }

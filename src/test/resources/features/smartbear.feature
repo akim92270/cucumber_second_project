@@ -57,6 +57,7 @@ Feature: Smart Bear Website
     And user clicks on "View all orders" menu item
     Then user should see their order displayed in the "List of All Orders" table
     And validate all information entered displayed correct with the order
+      | | Barney Lemon | FamilyAlbum | 2 | 07/10/2022 | 123 Main St | Long Grove, IL | US | 60047 | Visa | 000000000 | 12/29 | |
 
   @Regression
   Scenario: Validate "Delete Selected" button

@@ -13,8 +13,8 @@ public class SmartBearOrderPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = "#ctl00_MainContent_fmwOrder_ddlProduct option")
-    public List<WebElement> listOfProduct;
+    @FindBy(css = "#ctl00_MainContent_fmwOrder_ddlProduct")
+    public WebElement listOfProduct;
 
     @FindBy(css = "input[name$='Quantity']")
     public WebElement quantity;
@@ -42,6 +42,4 @@ public class SmartBearOrderPage {
 
     @FindBy(css = "#ctl00_MainContent_fmwOrder_TextBox1")
     public WebElement expiryDateInputBox;
-
-
 }
