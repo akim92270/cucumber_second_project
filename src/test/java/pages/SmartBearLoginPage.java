@@ -4,17 +4,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.Driver;
 
-public class SmartBearHomePage {
+public class SmartBearLoginPage extends BasePage{
 
-    public SmartBearHomePage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    public SmartBearLoginPage(){
+       super();
     }
 
-    @FindBy(css = "#ctl00_MainContent_username")
+    @FindBy(id = "ctl00_MainContent_username")
     public WebElement usernameInputBox;
 
-    @FindBy(css = "#ctl00_MainContent_password")
+    @FindBy(id = "ctl00_MainContent_password")
     public WebElement passwordInputBox;
 
     @FindBy(css = "#ctl00_MainContent_login_button")

@@ -4,42 +4,52 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.Driver;
 
 import java.util.List;
 
-public class SmartBearOrderPage {
+public class SmartBearOrderPage extends BasePage {
 
-    public SmartBearOrderPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+    public SmartBearOrderPage() {
+        super();
     }
 
     @FindBy(css = "#ctl00_MainContent_fmwOrder_ddlProduct")
     public WebElement listOfProduct;
 
-    @FindBy(css = "input[name$='Quantity']")
-    public WebElement quantity;
+    @FindBy(id = "ctl00_MainContent_fmwOrder_txtQuantity")
+    public WebElement quantityInputBox;
 
-    @FindBy(css = "input[name$='UnitPrice']")
-    public WebElement unitPrice;
+    @FindBy(id = "ctl00_MainContent_fmwOrder_txtName")
+    public WebElement customerNameInputBox;
 
-    @FindBy(css = "input[name$='Discount']")
-    public WebElement discount;
+    @FindBy(id = "ctl00_MainContent_fmwOrder_TextBox2")
+    public WebElement streetInputBox;
 
-    @FindBy(css = "input[name$='Total']")
-    public WebElement total;
+    @FindBy(id = "ctl00_MainContent_fmwOrder_TextBox3")
+    public WebElement cityInputBox;
 
-    @FindBy(css = "input[value='Calculate']")
-    public WebElement calculate;
+    @FindBy(id = "ctl00_MainContent_fmwOrder_TextBox4")
+    public WebElement stateInputBox;
 
-    @FindBy(css = "ol:nth-child(5) input")
-    public List<WebElement> listOfAddressInfoInputBox;
+    @FindBy(id = "ctl00_MainContent_fmwOrder_TextBox5")
+    public WebElement zipInputBox;
 
-    @FindBy(css = "ol input:nth-child(1)")
-    public List<WebElement> listOfCardPayment;
+    @FindBy(css = "input[id^='ctl00_MainContent_fmwOrder_cardList_']")
+    public List<WebElement> paymentTypeInputLabels;
 
     @FindBy(css = "#ctl00_MainContent_fmwOrder_TextBox6")
     public WebElement cardNumberInputBox;
 
     @FindBy(css = "#ctl00_MainContent_fmwOrder_TextBox1")
     public WebElement expiryDateInputBox;
+
+    public void selectPaymentType(String paymentType){
+        for(WebElement element : paymentTypeInputLabels){
+            if(element.getText().equals(paymentType)){
+                element.click();
+                break;
+            }
+        }
+    }
 }

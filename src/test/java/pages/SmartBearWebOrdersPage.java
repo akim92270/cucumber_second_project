@@ -1,20 +1,18 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class SmartBearWebOrdersPage {
+public class SmartBearWebOrdersPage extends BasePage{
 
-    public SmartBearWebOrdersPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    public SmartBearWebOrdersPage(){
+        super();
     }
 
-    @FindBy(css = "#ctl00_menu>li")
-    public List<WebElement> orderMenuLinks;
+    @FindBy(css = "#ctl00_menu>a")
+    public List<WebElement> webOrdersMenuItems;
 
     @FindBy(css = ".CheckUncheck>a")
     public List<WebElement> checkUncheckLinks;
@@ -28,18 +26,9 @@ public class SmartBearWebOrdersPage {
     @FindBy(css = ".SampleTable")
     public WebElement table;
 
-    @FindBy(css = "table[id='ctl00_MainContent_orderGrid'] tr:nth-child(2)")
-    public List<WebElement> firstRowCheck;
+    @FindBy(css = "input[id*='ctl00_MainContent_orderGrid_ctl']")
+    public List<WebElement> checkboxes;
 
     @FindBy(css = "#ctl00_MainContent_fmwOrder_InsertButton")
     public WebElement processButton;
-
-    public void clickOnMenuLink(String order){
-        for(WebElement link : orderMenuLinks){
-            if(link.getText().equals(order)){
-                link.click();
-                break;
-            }
-        }
-    }
 }
